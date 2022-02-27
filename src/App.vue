@@ -39,57 +39,87 @@ export default {
     }
   },
 
-  created(){
-    this.tasks=[
+  async created(){
+    this.tasks= await this.getAllTasks()
 
-{
-  id:1,
-  text:"Master Vue",
-  date:"29 Feb 2022",
-  reminder:true,
-  status:"pending"
+
+
 },
-{
-  id:2,
-  text:"Go to Mathilde",
-  date:"28 Feb 2022",
-  reminder:true,
-  status:"pending"
-},
-{
-  id:3,
-  text:"Infinity Mobile",
-  date:"29 Feb 2022",
-  reminder:false,
-  status:"pending"
-}
-    ]
-  },
   methods:{
 
 
 setShowAddTask(){
   this.showAddTask=!this.showAddTask
+
 },
+//!Adding New Task
+async addTask(newTask){
 
-addTask(newTask){
 
-  this.tasks=[...this.tasks,newTask]
+  const res= await fetch("api/tasks",{
+    method:"POST",
+    headers:{
+      "Content-type":"application/json"
+    },
+   body:JSON.stringify(newTask)
+  })
+  const data=await res.json()
+
+  this.tasks=[...this.tasks,data]
 },
-
-    deleteTask(taskId){
+//!Deleting a task with id
+   async deleteTask(taskId){
      if(confirm("Are you sure\nyou want to delete this task?")){
-    this.tasks=this.tasks.filter((task)=>task.id!==taskId)
+
+ const res= await fetch(`api/tasks/${taskId}`,{
+ method:"DELETE"
+ },)
+
+  res.status===200 ?
+  (this.tasks=this.tasks.filter((task)=>task.id!==taskId)):
+  alert(`Error while deleteing task with Id No:${taskId}`)
+
+    
      }
     },
-    setReminder(taskId){
 
+    //!Updating reminder of a single task with id
+   async setReminder(taskId){
+const task2BUpdated= await this.getAllTasks(taskId)
+const updatedTask= {...task2BUpdated,reminder:!task2BUpdated.reminder }
+
+
+const res= await fetch(`api/tasks/${taskId}`,{
+       method:"PUT",
+         headers:{
+      "Content-type":"application/json"
+    },
+    body:JSON.stringify(updatedTask)
+     })
+     
+const data= await res.json()
       this.tasks=this.tasks.map((task)=>task.id===taskId?
-      {...task,reminder:!task.reminder}:task)
+      {...task,reminder:data.reminder}:task)
 
+    },
+    //!GET All Tasks
+    async  getAllTasks(){
+      const res= await fetch("api/tasks");
+      const data= await res.json()
+      return data
+    },
+
+      //GET single Task by id
+    async  getSingleTask(id){
+      const res= await fetch(`api/tasks${id}`);
+      const data= await res.json()
+      return data
     }
+     
+     
+    
   }
-
+ 
 }
 </script>
 
