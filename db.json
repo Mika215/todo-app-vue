@@ -1,0 +1,48 @@
+{
+  "tasks": [
+    {
+      "id": 1645979572985,
+      "text": "DGfgd",
+      "date": "SDdg",
+      "reminder": true
+    },
+    {
+      "id": 1645979785928,
+      "text": "Hello",
+      "date": "345 245 245",
+      "reminder": true
+    },
+    {
+      "id": 1645979802272,
+      "text": "This should work",
+      "date": "q4365",
+      "reminder": true
+    }
+      
+    
+     
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Michael Tesfay",
+      "languages": [
+        "JS",
+        "TS",
+        "Phyton",
+        "PHP"
+      ],
+      "frameworks": [
+        "Vue.JS",
+        "React.JS",
+        "NodeJS"
+      ],
+      "Schools": [
+        "HackYourFuture-Belgium",
+        "Becode"
+      ],
+      "isAdmin": true,
+      "createdAt": "29-02-2022@17h34"
+    }
+  ]
+}
